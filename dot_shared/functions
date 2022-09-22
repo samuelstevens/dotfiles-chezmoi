@@ -1,0 +1,136 @@
+macnst (){
+    netstat -Watnlv | grep LISTEN | awk '{"ps -o comm= -p " $9 | getline procname;colred="\033[01;31m";colclr="\033[0m"; print colred "proto: " colclr $1 colred " | addr.port: " colclr $4 colred " | pid: " colclr $9 colred " | name: " colclr procname;  }' | column -t -s "|"
+}
+
+syspip () {
+  PIP_REQUIRE_VIRTUALENV="" pip --isolated "$@"
+}
+
+wifi(){
+  enabled=$(networksetup -getairportpower en0)
+
+  if [[ $enabled == *"On"* ]]; then
+    networksetup -setairportpower en0 off
+    echo "Wifi is now disabled."
+  else
+    networksetup -setairportpower en0 on
+    echo "Wifi is now enabled."
+  fi
+}
+
+marco() {
+  pwd > /tmp/marco 
+}
+polo() {
+  cd $(cat /tmp/marco)
+}
+
+mygrep() {
+  # adds some reasonable defaults to grep on systems where ripgrep can't be installed
+  grep --recursive --ignore-case --color --line-number --binary-files=without-match -- "$@"
+}
+
+who-owns() {
+  ps -o user= -p "$1"
+}
+
+function require {
+    if ! command -v "$1" 1>/dev/null 2>&1; then
+        echo "'$1' required, but not installed."
+        exit 1
+    fi
+}
+
+function venv {
+  if [[ -d venv ]]; then
+    source venv/bin/activate
+    return
+  fi
+
+  echo "No venv/ in $(pwd)."
+
+  if [[ -f .python-version ]]; then
+    echo "Making a new one with $(python3 --version)"
+    python -m venv venv
+    source venv/bin/activate
+    pip install --upgrade pip
+    return
+  elif command -v conda > /dev/null; then
+    conda_packages=$(conda env list | awk '/^[^#]/ {print $1}')
+    dir=$(basename $(pwd))
+    echo "conda is installed; checking for a conda environment matching $dir."
+    echo $conda_packages | grep -w -q $dir
+    if [[ $? -eq 0 ]]; then
+      echo "Found conda environment '$dir'; activating now."
+      conda activate $dir
+    else
+      echo "Couldn't find a conda environment with name $dir"
+    fi
+  else
+    echo "No .python-version file; will not make a virtualenv without knowing which version of python to use."
+  fi
+}
+
+function gtree {
+  git ls-tree -r --name-only HEAD $1 | tree --fromfile
+}
+
+function nextpaper {
+  paperdir="/Users/samstevens/Library/Mobile Documents/com~apple~CloudDocs/Reading/Papers"
+  notesdir="$paperdir/Notes"
+  pendingdir="$paperdir/Pending"
+  finisheddir="$paperdir/Finished"
+
+  mkdir -p "$notesdir"
+
+  if [ "$1" = '' ]; then
+    # Randomly choose a file from the most recently downloaded 20 files.
+    paperfilename="$(ls -t $pendingdir | head -n 20 | sort -R | head -n 1)"
+  else
+    echo "Choosing a paper with tag $1"
+    paperfilename="$(tag -f "$1" -0 "$pendingdir" | xargs -0 ls -t | head -n 20 | sort -R | head -n 1)"
+    paperfilename="$(basename "$paperfilename")"
+    echo "$paperfilename"
+  fi
+  title="${paperfilename%.*}"
+
+  paperpath="$pendingdir/$paperfilename"
+  echo $paperpath
+  open $paperpath
+
+  notesfilename="$title.md"
+
+  notespath="$notesdir/$notesfilename"
+
+  # Put the title in the file.
+  echo "# $title" >> $notespath
+  echo "" >> $notespath
+
+  # Add the tags.
+  tag --list --no-name "$paperpath" | python3 -c "tags = input().split(','); print(' '.join(f'#{tag}' for tag in tags))" >> $notespath
+
+  # Edit for easy access.
+  $EDITOR $notespath
+
+  echo "Now run: (copied to clipboard)"
+  echo "mv \"$paperpath\" \"$finisheddir\"" | pbcopy
+  pbpaste
+}
+
+function hex() {
+  printf "%02X%02X%02X\n" ${*//','/' '}
+}
+
+lfcd () {
+  tmp="$(mktemp)"
+  lf -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    if [ -d "$dir" ]; then
+      if [ "$dir" != "$(pwd)" ]; then
+        cd "$dir"
+      fi
+    fi
+  fi
+}

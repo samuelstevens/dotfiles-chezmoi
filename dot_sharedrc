@@ -1,0 +1,47 @@
+# This file is common between bash and zsh.
+# For bash-specific stuff, use bash_profile
+# For zsh-specific stuff, use zshrc
+
+for file in $(find -L $HOME/.shared -type f); do
+  source $file
+done
+
+# region vim-bindings
+set editing-mode vi
+set -o vi
+# endregion
+
+# region third-party tools
+
+# download starship
+if ! command -v starship 1>/dev/null 2>&1; then
+  if ping -c 1 starship.rs 1>/dev/null 2>&1; then
+    echo "Installing starhip prompt..."
+    sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+  fi
+fi
+
+# set fzf default command
+if command -v rg 1>/dev/null 2>&1; then
+  export FZF_DEFAULT_COMMAND='rg --files'
+fi
+
+# initialize pyenv
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init --path)"
+fi
+
+if command -v nodenv 1>/dev/null 2>&1; then
+  eval "$(nodenv init -)"
+fi
+
+# endregion
+
+# use color
+export CLICOLOR=1
+
+# disable homebrew analytics
+export HOMEBREW_NO_ANALYTICS=1
+
+# host specific stuff
+[ -f "$HOME/.hostrc" ] && source "$HOME/.hostrc"
