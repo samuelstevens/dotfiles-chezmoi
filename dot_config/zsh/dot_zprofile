@@ -1,1 +1,2 @@
 # This file is for login shells only
+eval "$(/opt/homebrew/bin/brew shellenv)"
