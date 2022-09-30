@@ -128,10 +128,10 @@ local on_attach = function(client, bufnr)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
 require'lspconfig'.pylsp.setup{ 
@@ -158,15 +158,11 @@ vim.g.gitblame_enabled = 0
 
 functions.create_augroup({
   { 'Filetype', 'python', 'setlocal', 'tabstop=4', 'shiftwidth=4', 'softtabstop=4' },
-  { 'Filetype', 'python', 'nnoremap', '<buffer>', '<leader>f', '<cmd>call Black()<CR>' },
+  { 'Filetype', 'python', 'nnoremap', '<buffer>', '<Leader>f', '<cmd>call Black()<CR>' },
 }, 'python')
 
 functions.create_augroup({
   { 'BufEnter', '*', ":lua require'functions'.addFileToSuffixesAdd()" }
 }, 'suffixesadd')
-
-functions.create_augroup({
-  { 'Filetype', 'fish', 'setlocal', 'tabstop=4', 'shiftwidth=4', 'softtabstop=4' },
-}, 'python')
 
 -- endregion
