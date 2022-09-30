@@ -86,17 +86,7 @@ keymap('i', '<C-K>', '<C-P>', {noremap=true})
 -- endregion
 
 -- region Plugins
-require "paq" {
-  "savq/paq-nvim";
-  "nvim-lua/plenary.nvim";
-  "nvim-telescope/telescope.nvim";
-  "numToStr/Comment.nvim";
-  "averms/black-nvim";
-  "neovim/nvim-lspconfig";
-  {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' };
-  "ziglang/zig.vim";
-  "f-person/git-blame.nvim";
-}
+require('plugins')
 
 -- Comment.nvim
 require('Comment').setup { 
@@ -174,5 +164,9 @@ functions.create_augroup({
 functions.create_augroup({
   { 'BufEnter', '*', ":lua require'functions'.addFileToSuffixesAdd()" }
 }, 'suffixesadd')
+
+functions.create_augroup({
+  { 'Filetype', 'fish', 'setlocal', 'tabstop=4', 'shiftwidth=4', 'softtabstop=4' },
+}, 'python')
 
 -- endregion
