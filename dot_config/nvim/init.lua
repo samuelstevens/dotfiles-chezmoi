@@ -165,4 +165,8 @@ functions.create_augroup({
   { 'BufEnter', '*', ":lua require'functions'.addFileToSuffixesAdd()" }
 }, 'suffixesadd')
 
+functions.create_augroup({
+  { 'Filetype', 'fish', 'setlocal', 'tabstop=4', 'shiftwidth=4', 'softtabstop=4' },
+}, 'fish')
+
 -- endregion

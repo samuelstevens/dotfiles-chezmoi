@@ -40,7 +40,7 @@ function wiki-find
         else if test (count $files) -eq 1
             set file $files[1]
         else 
-            set file (echo $files | sort --reverse | fzf)
+            set file (string split ' ' $files | sort --reverse | fzf)
         end
     end
 
