@@ -16,9 +16,10 @@ pyenv init - | source
 set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/ripgreprc
 
 if status --is-interactive
-    # Source the homebrew goodies to get my path set up
-    /opt/homebrew/bin/brew shellenv | source
-    nodenv init - | source
+    if test -f /opt/homebrew/bin/brew
+        # Source the homebrew goodies to get my path set up
+        /opt/homebrew/bin/brew shellenv | source
+    end
     
     # Use vi key bindings instead of those disgusting emacs bindings
     fish_vi_key_bindings

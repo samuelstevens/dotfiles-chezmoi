@@ -29,3 +29,4 @@ cd() {
         builtin cd "$@"
     fi
 }
+. "$HOME/.cargo/env"

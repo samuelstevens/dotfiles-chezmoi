@@ -153,6 +153,9 @@ require'lspconfig'.gopls.setup{
 -- Gitblame
 vim.g.gitblame_enabled = 0
 
+-- Leap
+require('leap').set_default_keymaps()
+
 -- endregion
 
 -- region Language-specific stuff

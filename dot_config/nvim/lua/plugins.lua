@@ -24,6 +24,8 @@ return require('packer').startup(function(use)
   use 'f-person/git-blame.nvim'
   use 'dag/vim-fish'
   use 'tpope/vim-vinegar'
+  use 'ggandor/leap.nvim'
+  use 'tpope/vim-repeat' -- required by leap
 
   if packerBootsrap then
     require('packer').sync()
