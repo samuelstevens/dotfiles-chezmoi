@@ -1,7 +1,7 @@
 # Getting Started
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- --bin ~/.local/bin init --apply samuelstevens
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply samuelstevens
 ```
 
 ## Install Required Tools
@@ -29,12 +29,13 @@ Then run your shell again (exit/ssh again, run `fish`, etc).
 [neovim](https://github.com/neovim/neovim/releases/)
 
 ```
-mkdir -p ~/.local/venv && cd ~/.local/venv
+mkdir -p ~/.local/venv
+cd ~/.local/venv
 python -m venv nvim
 
 source nvim/bin/activate.fish
 
-pip install pynvim black 'python-lsp-server[all]
+pip install pynvim black 'python-lsp-server[all]'
 ```
 
 [tmux](https://github.com/tmux/tmux/wiki/Installing#installing-tmux)
@@ -52,3 +53,16 @@ make install
 [ripgrep](https://github.com/BurntSushi/ripgrep/releases/tag/13.0.0)
 
 [fd](https://github.com/sharkdp/fd/releases/tag/v8.4.0)
+
+## Using Nix For Tools
+
+```
+nix-env -iA nixpkgs.fish
+nix-env -iA nixpkgs.tmux
+nix-env -iA nixpkgs.mosh
+nix-env -iA nixpkgs.fzf
+nix-env -iA nixpkgs.neovim
+nix-env -iA nixpkgs.ripgrep
+nix-env -iA nixpkgs.fd
+nix-env -iA nixpkgs.pv
+```
