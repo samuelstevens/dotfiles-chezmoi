@@ -59,10 +59,10 @@ make install
 ```
 nix-env -iA nixpkgs.fish
 nix-env -iA nixpkgs.tmux
-nix-env -iA nixpkgs.mosh
 nix-env -iA nixpkgs.fzf
 nix-env -iA nixpkgs.neovim
 nix-env -iA nixpkgs.ripgrep
 nix-env -iA nixpkgs.fd
 nix-env -iA nixpkgs.pv
+nix-env -iA nixpkgs.lazygit
 ```
