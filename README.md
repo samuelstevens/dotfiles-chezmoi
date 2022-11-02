@@ -54,6 +54,19 @@ make install
 
 [fd](https://github.com/sharkdp/fd/releases/tag/v8.4.0)
 
+[fish](https://fishshell.com)
+
+```sh
+wget https://github.com/fish-shell/fish-shell/releases/download/3.5.1/fish-3.5.1.tar.xz 
+tar fish-3.5.1.tar.xz
+cd fish-3.5.1
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local ..
+make
+make install
+```
+
 ## Using Nix For Tools
 
 ```
