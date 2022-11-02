@@ -173,4 +173,9 @@ functions.create_augroup({
   { 'Filetype', 'fish', 'setlocal', 'tabstop=4', 'shiftwidth=4', 'softtabstop=4' },
 }, 'fish')
 
+-- https://github.com/nvim-telescope/telescope.nvim/issues/699
+functions.create_augroup({
+  { 'BufEnter', '*', "normal zx" }
+}, 'telescope-tree-sitter-bug')
+
 -- endregion

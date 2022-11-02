@@ -23,6 +23,7 @@ return require('packer').startup(function(use)
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'f-person/git-blame.nvim'
   use 'dag/vim-fish'
+  use 'tpope/vim-eunuch'
   use 'tpope/vim-vinegar'
   use 'ggandor/leap.nvim'
   use 'tpope/vim-repeat' -- required by leap
